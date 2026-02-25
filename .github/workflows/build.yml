@@ -1,0 +1,28 @@
+name: Build ESP32-C3
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+
+      - name: Install PlatformIO
+        run: pip install platformio
+
+      - name: Build Firmware
+        run: pio run
+
+      - name: Upload Firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: firmware
+          path: .pio/build/esp32c3/firmware.bin
